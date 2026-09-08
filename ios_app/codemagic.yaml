@@ -1,65 +1,57 @@
 workflows:
   ios-build:
-    name: Build Camera Research IPA for qhun22
+    name: Build Camera Research IPA
     instance_type: mac_mini_m1
     max_build_duration: 15
     environment:
       xcode: latest
       cocoapods: default
       vars:
-        XCODE_WORKSPACE: "ios_app/CameraResearch/CameraResearch.xcodeproj"
+        XCODE_PROJECT: "CameraResearch.xcodeproj"
         XCODE_SCHEME: "CameraResearch"
         BUNDLE_ID: "com.qhun22.cameraresearch"
         APP_NAME: "CameraResearch"
-        APPLE_DEVELOPER_TEAM: ""
-    cache:
-      cache_paths:
-        - ~/.gradle/caches
-        - ~/.m2/repository
+        APPLE_DEVELOPER_TEAM: "DUMMYTEAM" # ✅ KHÔNG ĐỂ TRỐNG
     scripts:
       - name: Build and Archive
         script: |
-          echo "Building Camera Research for qhun22..."
-          xcodebuild clean \
-            -project "$XCODE_WORKSPACE" \
-            -scheme "$XCODE_SCHEME"
+          echo "🔨 Building Camera Research..."
+
+          # Clean build
+          xcodebuild clean -project "$XCODE_PROJECT" -scheme "$XCODE_SCHEME" || true
+
+          # Archive
           xcodebuild archive \
-            -project "$XCODE_WORKSPACE" \
+            -project "$XCODE_PROJECT" \
             -scheme "$XCODE_SCHEME" \
             -configuration Release \
             -sdk iphoneos \
-            -destination 'generic/platform=iOS' \
             -archivePath "build/$APP_NAME.xcarchive" \
+            -allowProvisioningUpdates \
             DEVELOPMENT_TEAM="$APPLE_DEVELOPER_TEAM" \
             CODE_SIGN_STYLE="Automatic" \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGNING_REQUIRED=NO \
-            PROVISIONING_PROFILE_SPECIFIER="" \
-            archive
-      - name: Export IPA
-        script: |
-          APP_PATH="build/$APP_NAME.xcarchive/Products/Applications/$APP_NAME.app"
-          test -d "$APP_PATH"
-          rm -rf build/Payload
-          mkdir -p build/Payload
-          cp -R "$APP_PATH" build/Payload/
-          (cd build && zip -qry "$APP_NAME.ipa" Payload)
-          rm -rf build/Payload
-          cp "build/$APP_NAME.ipa" "build/$APP_NAME.tipa"
-      - name: Verify Artifacts
-        script: |
-          file build/*.ipa 2>/dev/null || echo "No IPA files found"
-          file build/*.tipa 2>/dev/null || echo "No TIPA files found"
-          ls -la build/
+            CODE_SIGN_IDENTITY="iPhone Developer" \
+            PROVISIONING_PROFILE_SPECIFIER=""
+
+          # Export IPA
+          xcodebuild -exportArchive \
+            -archivePath "build/$APP_NAME.xcarchive" \
+            -exportPath "build" \
+            -exportOptionsPlist ExportOptions.plist \
+            -allowProvisioningUpdates \
+            DEVELOPMENT_TEAM="$APPLE_DEVELOPER_TEAM" \
+            CODE_SIGN_STYLE="Automatic"
+
+          # Kiểm tra file
+          if [ -f "build/$APP_NAME.ipa" ]; then
+            echo "✅ IPA created successfully!"
+            cp "build/$APP_NAME.ipa" "build/$APP_NAME.tipa"
+            echo "✅ TIPA created successfully!"
+            ls -la build/
+          else
+            echo "❌ IPA not found!"
+            exit 1
+          fi
     artifacts:
       - build/*.ipa
       - build/*.tipa
-      - build/*.xcarchive
-    publishing:
-      email:
-        recipients:
-          - qhun22@gmail.com
-        notify:
-          success: true
-          failure: true

@@ -1,4 +1,3 @@
-
 # Camera Research Panel - AOV
 
 ## Overview
