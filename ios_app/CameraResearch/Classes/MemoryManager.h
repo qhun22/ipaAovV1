@@ -4,7 +4,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <mach/mach.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -12,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedManager;
 
-// Memory Operations
+// Memory Operations - Simulated for Research
 - (BOOL)writeFloat:(float)value atOffset:(uintptr_t)offset;
 - (BOOL)writeBool:(BOOL)value atOffset:(uintptr_t)offset;
 - (float)readFloatAtOffset:(uintptr_t)offset;
@@ -24,6 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) uintptr_t offsetFreeRotate;    // 0x29
 @property (nonatomic, assign, readonly) uintptr_t offsetFogEnable;     // 0x88
 @property (nonatomic, assign, readonly) uintptr_t offsetMobaCamera;    // 0x20
+
+// Simulated values for demo
+@property (nonatomic, assign) float currentZoom;
+@property (nonatomic, assign) BOOL isFreeCamera;
+@property (nonatomic, assign) BOOL isFogEnabled;
 
 @end
 
