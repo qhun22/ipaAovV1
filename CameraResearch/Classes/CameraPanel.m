@@ -41,6 +41,7 @@
     // Container
     _containerView = [[UIView alloc] initWithFrame:CGRectMake(10, 60, 230, 330)];
     _containerView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.88];
+    _containerView.accessibilityIdentifier = @"CameraPanelContainer";
     _containerView.layer.cornerRadius = 14;
     _containerView.layer.borderColor = [UIColor colorWithRed:0.2 green:0.6 blue:1.0 alpha:0.8].CGColor;
     _containerView.layer.borderWidth = 1.5;
@@ -135,6 +136,14 @@
     _resetButton.layer.cornerRadius = 8;
     [_resetButton addTarget:self action:@selector(resetCamera) forControlEvents:UIControlEventTouchUpInside];
     [_containerView addSubview:_resetButton];
+
+    UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    closeButton.frame = CGRectMake(width - 32, 8, 28, 28);
+    [closeButton setTitle:@"×" forState:UIControlStateNormal];
+    [closeButton setTitleColor:[UIColor colorWithWhite:0.7 alpha:1.0] forState:UIControlStateNormal];
+    closeButton.titleLabel.font = [UIFont boldSystemFontOfSize:22];
+    [closeButton addTarget:self action:@selector(closeButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [_containerView addSubview:closeButton];
     
     y += 50;
     
@@ -161,6 +170,14 @@
     // Kéo thả panel
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [_containerView addGestureRecognizer:pan];
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *hitView = [super hitTest:point withEvent:event];
+    if (hitView == self || hitView == nil) {
+        return nil;
+    }
+    return hitView;
 }
 
 - (void)handlePan:(UIPanGestureRecognizer *)gesture {
@@ -237,6 +254,11 @@
     [self updateStatus];
     
     NSLog(@"[CameraPanel] 🔄 Camera reset to default");
+}
+
+- (void)closeButtonTapped {
+    [self hide];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MenuDidClose" object:nil];
 }
 
 - (void)updateStatus {
