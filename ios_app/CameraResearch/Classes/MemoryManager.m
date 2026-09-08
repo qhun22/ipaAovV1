@@ -6,6 +6,7 @@
 #import "MemoryManager.h"
 #import <dlfcn.h>
 #import <mach/mach.h>
+#import <mach/mach_vm.h>      // 🔥 QUAN TRỌNG: Header cho mach_vm_*
 
 @implementation MemoryManager
 
@@ -25,6 +26,7 @@
         _offsetFreeCamera = 0x28;
         _offsetFreeRotate = 0x29;
         _offsetFogEnable = 0x88;
+        _offsetMobaCamera = 0x20;
     }
     return self;
 }
@@ -32,37 +34,9 @@
 #pragma mark - Find CameraSystem
 
 - (mach_vm_address_t)findCameraSystem {
-    // Lấy task hiện tại (process của app)
-    mach_port_t task = mach_task_self();
-    
-    // Lấy thông tin vùng nhớ
-    vm_address_t address = 0;
-    vm_size_t size = 0;
-    vm_region_basic_info_data_64_t info;
-    mach_msg_type_number_t info_count = VM_REGION_BASIC_INFO_COUNT_64;
-    mach_port_t object_name;
-    
-    // Quét memory để tìm CameraSystem
-    // Pattern: CameraSystem là MonoSingleton, nằm trong heap
-    // Có thể tìm bằng cách scan pattern hoặc dùng symbol
-    
-    // Cách 1: Tìm symbol (nếu có)
-    void *handle = dlopen(NULL, RTLD_NOW);
-    if (handle) {
-        // Thử tìm symbol CameraSystem
-        void *symbol = dlsym(handle, "_ZN12CameraSystemC1Ev");
-        if (symbol) {
-            return (mach_vm_address_t)symbol;
-        }
-        dlclose(handle);
-    }
-    
-    // Cách 2: Scan memory pattern (demo - cần implement thực tế)
-    // Trong thực tế, cần scan các vùng nhớ để tìm pattern đặc trưng
-    // Hoặc dùng debug symbols để xác định địa chỉ
-    
-    NSLog(@"[MemoryManager] CameraSystem not found");
-    return 0;
+    // Demo: Trả về địa chỉ mẫu
+    // Trong thực tế, cần scan memory hoặc dùng debug symbols
+    return 0x0000000100000000;
 }
 
 #pragma mark - Read/Write Memory
@@ -75,11 +49,11 @@
     }
     
     mach_vm_address_t targetAddr = cameraSystem + offset;
-    kern_return_t kr = mach_vm_write(mach_task_self(), targetAddr, 
+    kern_return_t kr = mach_vm_write(mach_task_self(), targetAddr,
                                       (vm_offset_t)&value, sizeof(float));
     
     if (kr != KERN_SUCCESS) {
-        NSLog(@"[MemoryManager] Write failed: %d", kr);
+        NSLog(@"[MemoryManager] Write float failed: %d", kr);
         return NO;
     }
     
@@ -100,7 +74,7 @@
                                       (vm_offset_t)&boolValue, sizeof(bool));
     
     if (kr != KERN_SUCCESS) {
-        NSLog(@"[MemoryManager] Write failed: %d", kr);
+        NSLog(@"[MemoryManager] Write bool failed: %d", kr);
         return NO;
     }
     
@@ -116,13 +90,11 @@
     
     mach_vm_address_t targetAddr = cameraSystem + offset;
     float value = 0;
-    vm_size_t size = sizeof(float);
-    
-    kern_return_t kr = mach_vm_read(mach_task_self(), targetAddr,
-                                     size, (vm_offset_t*)&value, &size);
+    vm_size_t dataSize = sizeof(float);
+    kern_return_t kr = mach_vm_read(mach_task_self(), targetAddr, dataSize, (vm_offset_t*)&value, &dataSize);
     
     if (kr != KERN_SUCCESS) {
-        NSLog(@"[MemoryManager] Read failed: %d", kr);
+        NSLog(@"[MemoryManager] Read float failed: %d", kr);
         return 0.0f;
     }
     
@@ -137,13 +109,11 @@
     
     mach_vm_address_t targetAddr = cameraSystem + offset;
     bool value = false;
-    vm_size_t size = sizeof(bool);
-    
-    kern_return_t kr = mach_vm_read(mach_task_self(), targetAddr,
-                                     size, (vm_offset_t*)&value, &size);
+    vm_size_t dataSize = sizeof(bool);
+    kern_return_t kr = mach_vm_read(mach_task_self(), targetAddr, dataSize, (vm_offset_t*)&value, &dataSize);
     
     if (kr != KERN_SUCCESS) {
-        NSLog(@"[MemoryManager] Read failed: %d", kr);
+        NSLog(@"[MemoryManager] Read bool failed: %d", kr);
         return NO;
     }
     

@@ -6,7 +6,7 @@
 #import "MemoryManager.h"
 #import <dlfcn.h>
 #import <mach/mach.h>
-#import <mach/mach_vm.h>      // 🔥 THÊM DÒNG NÀY!
+#import <mach/mach_vm.h>      // 🔥 QUAN TRỌNG: Header cho mach_vm_*
 
 @implementation MemoryManager
 
@@ -34,24 +34,9 @@
 #pragma mark - Find CameraSystem
 
 - (mach_vm_address_t)findCameraSystem {
-    // Phương thức tìm CameraSystem trong memory
+    // Demo: Trả về địa chỉ mẫu
     // Trong thực tế, cần scan memory hoặc dùng debug symbols
-    
-    // Cách 1: Tìm symbol (nếu có)
-    void *handle = dlopen(NULL, RTLD_NOW);
-    if (handle) {
-        void *symbol = dlsym(handle, "_ZN12CameraSystemC1Ev");
-        if (symbol) {
-            return (mach_vm_address_t)symbol;
-        }
-        dlclose(handle);
-    }
-    
-    // Cách 2: Trả về địa chỉ giả cho demo
-    // Trong thực tế, sẽ scan heap để tìm CameraSystem
-    // Hoặc dùng các công cụ như Frida để lấy địa chỉ thật
-    // Vì đây là nghiên cứu học thuật, ta dùng giá trị mẫu
-    return 0x0000000100000000;  // Demo address - Cần thay bằng địa chỉ thật khi test
+    return 0x0000000100000000;
 }
 
 #pragma mark - Read/Write Memory
@@ -106,7 +91,12 @@
     mach_vm_address_t targetAddr = cameraSystem + offset;
     float value = 0;
     vm_size_t dataSize = sizeof(float);
-    mach_vm_read(mach_task_self(), targetAddr, dataSize, (vm_offset_t*)&value, &dataSize);
+    kern_return_t kr = mach_vm_read(mach_task_self(), targetAddr, dataSize, (vm_offset_t*)&value, &dataSize);
+    
+    if (kr != KERN_SUCCESS) {
+        NSLog(@"[MemoryManager] Read float failed: %d", kr);
+        return 0.0f;
+    }
     
     return value;
 }
@@ -120,7 +110,12 @@
     mach_vm_address_t targetAddr = cameraSystem + offset;
     bool value = false;
     vm_size_t dataSize = sizeof(bool);
-    mach_vm_read(mach_task_self(), targetAddr, dataSize, (vm_offset_t*)&value, &dataSize);
+    kern_return_t kr = mach_vm_read(mach_task_self(), targetAddr, dataSize, (vm_offset_t*)&value, &dataSize);
+    
+    if (kr != KERN_SUCCESS) {
+        NSLog(@"[MemoryManager] Read bool failed: %d", kr);
+        return NO;
+    }
     
     return value;
 }

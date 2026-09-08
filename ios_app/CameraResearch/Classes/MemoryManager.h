@@ -12,10 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedManager;
 
-// Tìm CameraSystem trong memory
-- (mach_vm_address_t)findCameraSystem;
-
-// Đọc/Ghi memory
+// Memory Operations
 - (BOOL)writeFloat:(float)value atOffset:(uintptr_t)offset;
 - (BOOL)writeBool:(BOOL)value atOffset:(uintptr_t)offset;
 - (float)readFloatAtOffset:(uintptr_t)offset;
@@ -26,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) uintptr_t offsetFreeCamera;    // 0x28
 @property (nonatomic, assign, readonly) uintptr_t offsetFreeRotate;    // 0x29
 @property (nonatomic, assign, readonly) uintptr_t offsetFogEnable;     // 0x88
+@property (nonatomic, assign, readonly) uintptr_t offsetMobaCamera;    // 0x20
 
 @end
 
