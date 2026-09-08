@@ -14,6 +14,7 @@
 		B10000010000000000000009 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10000110000000000000010 /* MainViewController.m */; };
 		B10000010000000000000011 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = B10000110000000000000013 /* Logger.m */; };
 		B10000010000000000000012 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10000110000000000000015 /* LoginViewController.m */; };
+		B10000010000000000000013 /* FloatingIconWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B10000110000000000000017 /* FloatingIconWindow.m */; };
 		B10000010000000000000005 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000120000000000000001 /* UIKit.framework */; };
 		B10000010000000000000006 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000120000000000000002 /* Foundation.framework */; };
 		B10000010000000000000007 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000120000000000000003 /* CoreGraphics.framework */; };
@@ -39,6 +40,8 @@
 		B10000110000000000000014 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.h; path = Logger.h; sourceTree = "<group>"; };
 		B10000110000000000000015 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		B10000110000000000000016 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		B10000110000000000000017 /* FloatingIconWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objc; path = FloatingIconWindow.m; sourceTree = "<group>"; };
+		B10000110000000000000018 /* FloatingIconWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.h; path = FloatingIconWindow.h; sourceTree = "<group>"; };
 		B10000120000000000000001 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B10000120000000000000002 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B10000120000000000000003 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -79,6 +82,8 @@
 				B10000110000000000000013 /* Logger.m */,
 				B10000110000000000000016 /* LoginViewController.h */,
 				B10000110000000000000015 /* LoginViewController.m */,
+				B10000110000000000000018 /* FloatingIconWindow.h */,
+				B10000110000000000000017 /* FloatingIconWindow.m */,
 				B10000300000000000000005 /* Classes */,
 				B10000110000000000000007 /* main.m */,
 				B10000110000000000000008 /* Info.plist */,
@@ -191,6 +196,7 @@
 				B10000010000000000000009 /* MainViewController.m in Sources */,
 				B10000010000000000000011 /* Logger.m in Sources */,
 				B10000010000000000000012 /* LoginViewController.m in Sources */,
+				B10000010000000000000013 /* FloatingIconWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,8 +205,8 @@
 /* Begin XCBuildConfiguration section */
 		B10000700000000000000001 /* Debug */ = { isa = XCBuildConfiguration; buildSettings = { CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; IPHONEOS_DEPLOYMENT_TARGET = 13.0; SDKROOT = iphoneos; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Debug; };
 		B10000700000000000000002 /* Release */ = { isa = XCBuildConfiguration; buildSettings = { CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; IPHONEOS_DEPLOYMENT_TARGET = 13.0; SDKROOT = iphoneos; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Release; };
-		B10000700000000000000003 /* Debug */ = { isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_IDENTITY = ""; CODE_SIGNING_ALLOWED = NO; CODE_SIGNING_REQUIRED = NO; CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO; CODE_SIGN_STYLE = Manual; DEVELOPMENT_TEAM = ""; ENABLE_BITCODE = NO; INFOPLIST_FILE = CameraResearch/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 13.0; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks"); ONLY_ACTIVE_ARCH = NO; PRODUCT_BUNDLE_IDENTIFIER = com.qhun22.cameraresearch; PRODUCT_NAME = CameraResearch; PROVISIONING_PROFILE_SPECIFIER = ""; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Debug; };
-		B10000700000000000000004 /* Release */ = { isa = XCBuildConfiguration; buildSettings = { ARCHS = arm64; CODE_SIGN_IDENTITY = ""; CODE_SIGNING_ALLOWED = NO; CODE_SIGNING_REQUIRED = NO; CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO; CODE_SIGN_STYLE = Manual; DEVELOPMENT_TEAM = ""; ENABLE_BITCODE = NO; INFOPLIST_FILE = CameraResearch/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 13.0; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks"); ONLY_ACTIVE_ARCH = NO; PRODUCT_BUNDLE_IDENTIFIER = com.qhun22.cameraresearch; PRODUCT_NAME = CameraResearch; PROVISIONING_PROFILE_SPECIFIER = ""; SUPPORTED_PLATFORMS = iphoneos; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Release; };
+		B10000700000000000000003 /* Debug */ = { isa = XCBuildConfiguration; buildSettings = { ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_IDENTITY = ""; CODE_SIGNING_ALLOWED = NO; CODE_SIGNING_REQUIRED = NO; CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO; CODE_SIGN_STYLE = Manual; DEVELOPMENT_TEAM = ""; ENABLE_BITCODE = NO; INFOPLIST_FILE = CameraResearch/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 13.0; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks"); ONLY_ACTIVE_ARCH = NO; PRODUCT_BUNDLE_IDENTIFIER = com.qhun22.cameraresearch; PRODUCT_NAME = CameraResearch; PROVISIONING_PROFILE_SPECIFIER = ""; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Debug; };
+		B10000700000000000000004 /* Release */ = { isa = XCBuildConfiguration; buildSettings = { ARCHS = arm64; ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_IDENTITY = ""; CODE_SIGNING_ALLOWED = NO; CODE_SIGNING_REQUIRED = NO; CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO; CODE_SIGN_STYLE = Manual; DEVELOPMENT_TEAM = ""; ENABLE_BITCODE = NO; INFOPLIST_FILE = CameraResearch/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 13.0; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks"); ONLY_ACTIVE_ARCH = NO; PRODUCT_BUNDLE_IDENTIFIER = com.qhun22.cameraresearch; PRODUCT_NAME = CameraResearch; PROVISIONING_PROFILE_SPECIFIER = ""; SUPPORTED_PLATFORMS = iphoneos; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Release; };
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */

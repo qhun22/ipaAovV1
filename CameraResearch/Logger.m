@@ -16,23 +16,33 @@
         return;
     }
 
-    NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *logPath = [documentsPath stringByAppendingPathComponent:@"CameraResearch.log"];
+    @synchronized (self) {
+        NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+        if (documentsPath.length == 0) {
+            return;
+        }
+
+        NSString *logPath = [documentsPath stringByAppendingPathComponent:@"CameraResearch.log"];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (![fileManager fileExistsAtPath:logPath]) {
+            [fileManager createFileAtPath:logPath contents:nil attributes:nil];
+        }
+
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSString *line = [NSString stringWithFormat:@"[%@] [%@] %@\n",
                       [formatter stringFromDate:[NSDate date]], event, message ?: @""];
 
-    NSFileHandle *handle = [NSFileHandle fileHandleForWritingAtPath:logPath];
-    if (handle == nil) {
-        [line writeToFile:logPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
-        return;
-    }
+        NSFileHandle *handle = [NSFileHandle fileHandleForWritingAtPath:logPath];
+        if (handle == nil) {
+            return;
+        }
 
-    [handle seekToEndOfFile];
-    [handle writeData:[line dataUsingEncoding:NSUTF8StringEncoding]];
-    [handle closeFile];
+        [handle seekToEndOfFile];
+        [handle writeData:[line dataUsingEncoding:NSUTF8StringEncoding]];
+        [handle closeFile];
+    }
 }
 
 @end
