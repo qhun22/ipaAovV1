@@ -1,56 +1,43 @@
 workflows:
   ios-build:
-    name: Build Camera Research IPA
+    name: Build Camera Research IPA (Unsigned)
     instance_type: mac_mini_m1
     max_build_duration: 15
     environment:
       xcode: latest
-      cocoapods: default
-      vars:
-        XCODE_PROJECT: "CameraResearch.xcodeproj"
-        XCODE_SCHEME: "CameraResearch"
-        BUNDLE_ID: "com.qhun22.cameraresearch"
-        APP_NAME: "CameraResearch"
     scripts:
-      - name: Build and Archive
+      - name: Build Unsigned IPA
         script: |
-          echo "🔨 Building Camera Research..."
+          set -euxo pipefail
 
-          # Clean
-          xcodebuild clean -project "$XCODE_PROJECT" -scheme "$XCODE_SCHEME" || true
+          echo "Building unsigned IPA for TrollStore"
+          rm -rf build Payload CameraResearch.ipa CameraResearch.tipa
 
-          # Archive
-          xcodebuild archive \
-            -project "$XCODE_PROJECT" \
-            -scheme "$XCODE_SCHEME" \
+          xcodebuild \
+            -project CameraResearch.xcodeproj \
+            -scheme CameraResearch \
             -configuration Release \
             -sdk iphoneos \
-            -archivePath "build/$APP_NAME.xcarchive" \
-            -allowProvisioningUpdates \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO \
+            PROVISIONING_PROFILE_SPECIFIER="" \
             DEVELOPMENT_TEAM="" \
-            CODE_SIGN_STYLE="Automatic" \
-            CODE_SIGN_IDENTITY="iPhone Developer" \
-            PROVISIONING_PROFILE_SPECIFIER=""
+            build
 
-          # Export IPA - QUAN TRỌNG: thêm -exportOptionsPlist
-          xcodebuild -exportArchive \
-            -archivePath "build/$APP_NAME.xcarchive" \
-            -exportPath "build" \
-            -exportOptionsPlist ExportOptions.plist \
-            -allowProvisioningUpdates \
-            DEVELOPMENT_TEAM="" \
-            CODE_SIGN_STYLE="Automatic"
+          APP_PATH="build/Build/Products/Release-iphoneos/CameraResearch.app"
+          test -d "$APP_PATH"
 
-          # Tạo TIPA
-          if [ -f "build/$APP_NAME.ipa" ]; then
-            echo "✅ IPA created!"
-            cp "build/$APP_NAME.ipa" "build/$APP_NAME.tipa"
-            echo "✅ TIPA created!"
-            ls -la build/
-          else
-            echo "❌ IPA not found!"
-            exit 1
-          fi
+          mkdir -p Payload
+          cp -R "$APP_PATH" Payload/CameraResearch.app
+
+          # IPA and TIPA are the same unsigned ZIP with different extensions.
+          ditto -c -k --sequesterRsrc --keepParent Payload CameraResearch.ipa
+          cp CameraResearch.ipa CameraResearch.tipa
+
+          unzip -l CameraResearch.ipa
     artifacts:
-      - build/*.ipa
-      - build/*.tipa
+      - CameraResearch.ipa
+      - CameraResearch.tipa

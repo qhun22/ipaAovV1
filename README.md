@@ -34,12 +34,13 @@ ios_app/CameraResearch/
 
 ## Build
 
-The Codemagic workflow builds an archive and exports `CameraResearch.ipa`.
-It also creates `CameraResearch.tipa` as a renamed copy for TrollStore workflows.
+The Codemagic workflow builds the app directly for `iphoneos` with code signing
+disabled. It places the app in a `Payload` directory and creates both
+`CameraResearch.ipa` and `CameraResearch.tipa` for TrollStore workflows.
 
-Configure signing credentials and a development provisioning profile for:
-
-`com.qhun22.cameraresearch`
+No Apple Developer account, team ID, provisioning profile, or
+`ExportOptions.plist` is required. The resulting package is intended for
+installation through TrollStore.
 
 ## Author
 
