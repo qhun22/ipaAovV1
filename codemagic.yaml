@@ -1,31 +1,49 @@
 workflows:
   ios-build:
-    name: Build Camera Research IPA
+    name: Build Camera Research IPA for qhun22
     instance_type: mac_mini_m1
-    max_build_duration: 10
+    max_build_duration: 15
     environment:
       xcode: latest
+      cocoapods: default
+      vars:
+        XCODE_PROJECT: "CameraResearch.xcodeproj"
+        XCODE_SCHEME: "CameraResearch"
+        BUNDLE_ID: "com.qhun22.cameraresearch"
+        APP_NAME: "CameraResearch"
+      groups:
+        - app_store_credentials
+    cache:
+      cache_paths:
+        - ~/.gradle/caches
+        - ~/.m2/repository
     scripts:
-      - name: Build IPA
+      - name: Select provisioning profiles
         script: |
-          # Build project
-          xcodebuild \
-            -project CameraResearch.xcodeproj \
-            -scheme CameraResearch \
+          xcode-project use-profiles
+      - name: Build and Archive
+        script: |
+          xcodebuild clean \
+            -project "$XCODE_PROJECT" \
+            -scheme "$XCODE_SCHEME"
+          xcodebuild archive \
+            -project "$XCODE_PROJECT" \
+            -scheme "$XCODE_SCHEME" \
             -configuration Release \
             -sdk iphoneos \
-            -archivePath build/CameraResearch.xcarchive \
+            -destination 'generic/platform=iOS' \
+            -archivePath "build/$APP_NAME.xcarchive" \
+            -allowProvisioningUpdates \
             archive
-
-          # Export IPA
+      - name: Export IPA
+        script: |
           xcodebuild \
             -exportArchive \
-            -archivePath build/CameraResearch.xcarchive \
+            -archivePath "build/$APP_NAME.xcarchive" \
             -exportPath build \
             -exportOptionsPlist ExportOptions.plist
-
-          # Đổi tên thành .tipa
-          cp build/CameraResearch.ipa build/CameraResearch.tipa
+          cp "build/$APP_NAME.ipa" "build/$APP_NAME.tipa"
     artifacts:
       - build/CameraResearch.ipa
       - build/CameraResearch.tipa
+      - build/CameraResearch.xcarchive
