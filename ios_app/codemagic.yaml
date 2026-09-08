@@ -11,13 +11,12 @@ workflows:
         XCODE_SCHEME: "CameraResearch"
         BUNDLE_ID: "com.qhun22.cameraresearch"
         APP_NAME: "CameraResearch"
-        APPLE_DEVELOPER_TEAM: "DUMMYTEAM" # ✅ KHÔNG ĐỂ TRỐNG
     scripts:
       - name: Build and Archive
         script: |
           echo "🔨 Building Camera Research..."
 
-          # Clean build
+          # Clean
           xcodebuild clean -project "$XCODE_PROJECT" -scheme "$XCODE_SCHEME" || true
 
           # Archive
@@ -28,25 +27,25 @@ workflows:
             -sdk iphoneos \
             -archivePath "build/$APP_NAME.xcarchive" \
             -allowProvisioningUpdates \
-            DEVELOPMENT_TEAM="$APPLE_DEVELOPER_TEAM" \
+            DEVELOPMENT_TEAM="" \
             CODE_SIGN_STYLE="Automatic" \
             CODE_SIGN_IDENTITY="iPhone Developer" \
             PROVISIONING_PROFILE_SPECIFIER=""
 
-          # Export IPA
+          # Export IPA - QUAN TRỌNG: thêm -exportOptionsPlist
           xcodebuild -exportArchive \
             -archivePath "build/$APP_NAME.xcarchive" \
             -exportPath "build" \
             -exportOptionsPlist ExportOptions.plist \
             -allowProvisioningUpdates \
-            DEVELOPMENT_TEAM="$APPLE_DEVELOPER_TEAM" \
+            DEVELOPMENT_TEAM="" \
             CODE_SIGN_STYLE="Automatic"
 
-          # Kiểm tra file
+          # Tạo TIPA
           if [ -f "build/$APP_NAME.ipa" ]; then
-            echo "✅ IPA created successfully!"
+            echo "✅ IPA created!"
             cp "build/$APP_NAME.ipa" "build/$APP_NAME.tipa"
-            echo "✅ TIPA created successfully!"
+            echo "✅ TIPA created!"
             ls -la build/
           else
             echo "❌ IPA not found!"
