@@ -1,11 +1,13 @@
 #import "MainViewController.h"
 #import "CameraPanel.h"
+#import "Logger.h"
 
 @interface MainViewController ()
 @property (nonatomic, strong) CameraPanel *cameraPanel;
 @property (nonatomic, strong) UIButton *startButton;
 @property (nonatomic, strong) UIButton *menuToggleButton;
 @property (nonatomic, assign) BOOL menuVisible;
+@property (nonatomic, assign) BOOL hasStarted;
 @end
 
 @implementation MainViewController
@@ -14,6 +16,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:0.06 green:0.08 blue:0.12 alpha:1.0];
     self.menuVisible = NO;
+    self.hasStarted = NO;
 
     [self setupStartButton];
     [self setupMenuToggleButton];
@@ -24,6 +27,10 @@
                                              selector:@selector(menuDidClose:)
                                                  name:@"MenuDidClose"
                                                object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                                                         selector:@selector(applicationWillEnterForeground:)
+                                                                                                 name:UIApplicationWillEnterForegroundNotification
+                                                                                             object:nil];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -65,19 +72,23 @@
 }
 
 - (void)startButtonTapped {
+    self.hasStarted = YES;
     self.startButton.hidden = YES;
     self.menuToggleButton.hidden = NO;
+    [[Logger sharedLogger] logEvent:@"START"];
     [self showMenu];
 }
 
 - (void)showMenu {
     self.menuVisible = YES;
     [self.cameraPanel show];
+    [[Logger sharedLogger] logEvent:@"MENU_OPEN"];
 }
 
 - (void)hideMenu {
     self.menuVisible = NO;
     [self.cameraPanel hide];
+    [[Logger sharedLogger] logEvent:@"MENU_CLOSE"];
 }
 
 - (void)toggleMenu {
@@ -97,6 +108,13 @@
 
 - (void)menuDidClose:(NSNotification *)notification {
     self.menuVisible = NO;
+    [[Logger sharedLogger] logEvent:@"MENU_CLOSE"];
+}
+
+- (void)applicationWillEnterForeground:(NSNotification *)notification {
+    if (self.hasStarted) {
+        self.menuToggleButton.hidden = NO;
+    }
 }
 
 - (void)dealloc {
