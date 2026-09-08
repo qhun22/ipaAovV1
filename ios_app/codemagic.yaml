@@ -1,0 +1,31 @@
+workflows:
+  ios-build:
+    name: Build Camera Research IPA
+    instance_type: mac_mini_m1
+    max_build_duration: 10
+    environment:
+      xcode: latest
+    scripts:
+      - name: Build IPA
+        script: |
+          # Build project
+          xcodebuild \
+            -project CameraResearch.xcodeproj \
+            -scheme CameraResearch \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath build/CameraResearch.xcarchive \
+            archive
+
+          # Export IPA
+          xcodebuild \
+            -exportArchive \
+            -archivePath build/CameraResearch.xcarchive \
+            -exportPath build \
+            -exportOptionsPlist ExportOptions.plist
+
+          # Đổi tên thành .tipa
+          cp build/CameraResearch.ipa build/CameraResearch.tipa
+    artifacts:
+      - build/CameraResearch.ipa
+      - build/CameraResearch.tipa
