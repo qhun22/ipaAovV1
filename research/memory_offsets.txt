@@ -1,0 +1,55 @@
+# CAMERA SYSTEM - AOV
+# File: dump.cs
+# Class: CameraSystem
+# Namespace: Global
+
+============================================
+BIẾN QUAN TRỌNG
+============================================
+
+1. Zoom
+   - Offset: 0xDC
+   - Kiểu: float
+   - Giá trị mặc định: 32.0
+   - Mô tả: Điều khiển khoảng cách camera
+   - Sử dụng: Zoom In/Out
+
+2. bFreeCamera
+   - Offset: 0x28
+   - Kiểu: bool
+   - Giá trị mặc định: false
+   - Mô tả: Bật/tắt chế độ camera tự do
+   - Sử dụng: Free Camera Mode
+
+3. bFreeRotate
+   - Offset: 0x29
+   - Kiểu: bool
+   - Giá trị mặc định: false
+   - Mô tả: Bật/tắt xoay camera tự do
+   - Sử dụng: Free Rotate Mode
+
+4. m_baseFogEnable
+   - Offset: 0x88
+   - Kiểu: bool
+   - Giá trị mặc định: true
+   - Mô tả: Bật/tắt sương mù
+   - Sử dụng: No Fog
+
+5. MobaCamera
+   - Offset: 0x20
+   - Kiểu: Moba_Camera
+   - Mô tả: Camera chi tiết trong trận
+   - Sử dụng: Camera Control
+
+============================================
+OFFSET CẦN GHI NHỚ
+============================================
+| Biến            | Offset | Kiểu  | Ghi chú           |
+|-----------------|--------|-------|-------------------|
+| Zoom            | 0xDC   | float | Điều khiển zoom   |
+| bFreeCamera     | 0x28   | bool  | Free mode         |
+| bFreeRotate     | 0x29   | bool  | Free rotate       |
+| m_baseFogEnable | 0x88   | bool  | Bật/tắt fog       |
+| MobaCamera      | 0x20   | ref   | Camera chi tiết   |
+| m_curZoom       | 0x94   | float | Zoom hiện tại     |
+============================================

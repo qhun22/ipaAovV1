@@ -1,0 +1,12 @@
+# Android/Gradle generated files
+.gradle/
+**/.gradle/
+
+# IDE metadata
+.idea/
+.vscode/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
