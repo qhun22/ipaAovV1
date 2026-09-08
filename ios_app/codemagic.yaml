@@ -2,30 +2,39 @@ workflows:
   ios-build:
     name: Build Camera Research IPA
     instance_type: mac_mini_m1
-    max_build_duration: 10
+    max_build_duration: 30
     environment:
       xcode: latest
+      vars:
+        BUNDLE_ID: com.yourcompany.cameraresearch
+      groups:
+        - app_store_credentials
     scripts:
-      - name: Build IPA
+      - name: Select provisioning profiles
         script: |
-          # Build project
+          xcode-project use-profiles
+      - name: Build and archive
+        script: |
+          cd ios_app/CameraResearch
           xcodebuild \
             -project CameraResearch.xcodeproj \
             -scheme CameraResearch \
             -configuration Release \
             -sdk iphoneos \
-            -archivePath build/CameraResearch.xcarchive \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$CM_BUILD_DIR/CameraResearch.xcarchive" \
             archive
-
-          # Export IPA
+      - name: Export IPA
+        script: |
+          cd ios_app/CameraResearch
           xcodebuild \
             -exportArchive \
-            -archivePath build/CameraResearch.xcarchive \
-            -exportPath build \
+            -archivePath "$CM_BUILD_DIR/CameraResearch.xcarchive" \
+            -exportPath "$CM_BUILD_DIR/export" \
             -exportOptionsPlist ExportOptions.plist
-
-          # Đổi tên thành .tipa
-          cp build/CameraResearch.ipa build/CameraResearch.tipa
+          mkdir -p "$CM_BUILD_DIR/artifacts"
+          cp "$CM_BUILD_DIR/export/CameraResearch.ipa" "$CM_BUILD_DIR/artifacts/CameraResearch.ipa"
+          cp "$CM_BUILD_DIR/export/CameraResearch.ipa" "$CM_BUILD_DIR/artifacts/CameraResearch.tipa"
     artifacts:
-      - build/CameraResearch.ipa
-      - build/CameraResearch.tipa
+      - $CM_BUILD_DIR/artifacts/CameraResearch.ipa
+      - $CM_BUILD_DIR/artifacts/CameraResearch.tipa

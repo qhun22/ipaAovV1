@@ -1,0 +1,256 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000010000000000000001 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A10000110000000000000001 /* AppDelegate.m */; };
+		A10000010000000000000002 /* CameraPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = A10000110000000000000003 /* CameraPanel.m */; };
+		A10000010000000000000003 /* MemoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A10000110000000000000005 /* MemoryManager.m */; };
+		A10000010000000000000004 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A10000110000000000000007 /* main.m */; };
+		A10000010000000000000005 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000120000000000000001 /* UIKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A10000100000000000000001 /* CameraResearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CameraResearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000110000000000000001 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A10000110000000000000002 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A10000110000000000000003 /* CameraPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraPanel.m; sourceTree = "<group>"; };
+		A10000110000000000000004 /* CameraPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraPanel.h; sourceTree = "<group>"; };
+		A10000110000000000000005 /* MemoryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemoryManager.m; sourceTree = "<group>"; };
+		A10000110000000000000006 /* MemoryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemoryManager.h; sourceTree = "<group>"; };
+		A10000110000000000000007 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A10000110000000000000008 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A10000120000000000000001 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A10000200000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000010000000000000005 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A10000300000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A10000300000000000000002 /* CameraResearch */,
+				A10000300000000000000003 /* Products */,
+				A10000300000000000000004 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A10000300000000000000002 /* CameraResearch */ = {
+			isa = PBXGroup;
+			children = (
+				A10000110000000000000002 /* AppDelegate.h */,
+				A10000110000000000000001 /* AppDelegate.m */,
+				A10000300000000000000005 /* Classes */,
+				A10000110000000000000007 /* main.m */,
+				A10000110000000000000008 /* Info.plist */,
+			);
+			path = "";
+			sourceTree = "<group>";
+		};
+		A10000300000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A10000100000000000000001 /* CameraResearch.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A10000300000000000000004 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A10000120000000000000001 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A10000300000000000000005 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A10000110000000000000004 /* CameraPanel.h */,
+				A10000110000000000000003 /* CameraPanel.m */,
+				A10000110000000000000006 /* MemoryManager.h */,
+				A10000110000000000000005 /* MemoryManager.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A10000400000000000000001 /* CameraResearch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000600000000000000002 /* Build configuration list for PBXNativeTarget "CameraResearch" */;
+			buildPhases = (
+				A10000200000000000000002 /* Sources */,
+				A10000200000000000000001 /* Frameworks */,
+				A10000200000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CameraResearch;
+			productName = CameraResearch;
+			productReference = A10000100000000000000001 /* CameraResearch.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A10000500000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					A10000400000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = A10000600000000000000001 /* Build configuration list for PBXProject "CameraResearch" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A10000300000000000000001;
+			productRefGroup = A10000300000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A10000400000000000000001 /* CameraResearch */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A10000200000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A10000200000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000010000000000000001 /* AppDelegate.m in Sources */,
+				A10000010000000000000002 /* CameraPanel.m in Sources */,
+				A10000010000000000000003 /* MemoryManager.m in Sources */,
+				A10000010000000000000004 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A10000700000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A10000700000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A10000700000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.cameraresearch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A10000700000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.cameraresearch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A10000600000000000000001 /* Build configuration list for PBXProject "CameraResearch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000700000000000000001 /* Debug */,
+				A10000700000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000600000000000000002 /* Build configuration list for PBXNativeTarget "CameraResearch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000700000000000000003 /* Debug */,
+				A10000700000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A10000500000000000000001 /* Project object */;
+}
