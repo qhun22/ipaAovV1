@@ -1,40 +1,67 @@
 workflows:
   ios-build:
-    name: Build Camera Research IPA
+    name: Build Camera Research IPA for qhun22
     instance_type: mac_mini_m1
-    max_build_duration: 30
+    max_build_duration: 15
     environment:
       xcode: latest
+      cocoapods: default
       vars:
-        BUNDLE_ID: com.yourcompany.cameraresearch
+        XCODE_WORKSPACE: "ios_app/CameraResearch/CameraResearch.xcodeproj"
+        XCODE_SCHEME: "CameraResearch"
+        BUNDLE_ID: "com.qhun22.cameraresearch"
+        APP_NAME: "CameraResearch"
       groups:
         - app_store_credentials
+    cache:
+      cache_paths:
+        - ~/.gradle/caches
+        - ~/.m2/repository
     scripts:
       - name: Select provisioning profiles
         script: |
           xcode-project use-profiles
-      - name: Build and archive
+      - name: Build and Archive
         script: |
-          cd ios_app/CameraResearch
-          xcodebuild \
-            -project CameraResearch.xcodeproj \
-            -scheme CameraResearch \
+          echo "Building Camera Research for qhun22..."
+          xcodebuild clean \
+            -project "$XCODE_WORKSPACE" \
+            -scheme "$XCODE_SCHEME"
+          xcodebuild archive \
+            -project "$XCODE_WORKSPACE" \
+            -scheme "$XCODE_SCHEME" \
             -configuration Release \
             -sdk iphoneos \
             -destination 'generic/platform=iOS' \
-            -archivePath "$CM_BUILD_DIR/CameraResearch.xcarchive" \
+            -archivePath "build/$APP_NAME.xcarchive" \
+            -allowProvisioningUpdates \
             archive
       - name: Export IPA
         script: |
-          cd ios_app/CameraResearch
           xcodebuild \
             -exportArchive \
-            -archivePath "$CM_BUILD_DIR/CameraResearch.xcarchive" \
-            -exportPath "$CM_BUILD_DIR/export" \
-            -exportOptionsPlist ExportOptions.plist
-          mkdir -p "$CM_BUILD_DIR/artifacts"
-          cp "$CM_BUILD_DIR/export/CameraResearch.ipa" "$CM_BUILD_DIR/artifacts/CameraResearch.ipa"
-          cp "$CM_BUILD_DIR/export/CameraResearch.ipa" "$CM_BUILD_DIR/artifacts/CameraResearch.tipa"
+            -archivePath "build/$APP_NAME.xcarchive" \
+            -exportPath build \
+            -exportOptionsPlist ios_app/CameraResearch/ExportOptions.plist \
+            -allowProvisioningUpdates
+          echo "Build success!"
+          ls -la build/
+      - name: Create TIPA for TrollStore
+        script: |
+          cp "build/$APP_NAME.ipa" "build/$APP_NAME.tipa"
+      - name: Verify Artifacts
+        script: |
+          file build/*.ipa 2>/dev/null || echo "No IPA files found"
+          file build/*.tipa 2>/dev/null || echo "No TIPA files found"
+          ls -la build/
     artifacts:
-      - $CM_BUILD_DIR/artifacts/CameraResearch.ipa
-      - $CM_BUILD_DIR/artifacts/CameraResearch.tipa
+      - build/*.ipa
+      - build/*.tipa
+      - build/*.xcarchive
+    publishing:
+      email:
+        recipients:
+          - qhun22@gmail.com
+        notify:
+          success: true
+          failure: true

@@ -1,11 +1,44 @@
-# Android/Gradle generated files
+# Xcode
+*.xcuserstate
+*.xcuserdatad
+xcuserdata/
+DerivedData/
+*.moved-aside
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+build/
+Archive/
+
+# CocoaPods
+Pods/
+Podfile.lock
+*.xcworkspace
+
+# Android/Gradle
 .gradle/
 **/.gradle/
 
-# IDE metadata
+# Carthage
+Carthage/
+*.framework
+
+# Fastlane
+fastlane/report.xml
+fastlane/test_output
+
+# IDE
 .idea/
 .vscode/
 *.iml
+*.swp
+*.swo
+*~
 
 # OS files
 .DS_Store
