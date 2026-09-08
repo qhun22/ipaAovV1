@@ -211,14 +211,16 @@
     
     // Ghi vào memory (simulated)
     [_memoryManager writeFloat:value atOffset:_memoryManager.offsetZoom];
-    [[Logger sharedLogger] logEvent:[NSString stringWithFormat:@"ZOOM_CHANGE %.1f", value]];
+    [[Logger sharedLogger] logEvent:@"ZOOM_CHANGE"
+                             message:[NSString stringWithFormat:@"value=%.1f", value]];
     [self updateStatus];
 }
 
 - (void)freeCameraToggled:(UISwitch *)sender {
     BOOL enabled = sender.on;
     [_memoryManager writeBool:enabled atOffset:_memoryManager.offsetFreeCamera];
-    [[Logger sharedLogger] logEvent:[NSString stringWithFormat:@"FREE_CAMERA_%@", enabled ? @"ON" : @"OFF"]];
+    [[Logger sharedLogger] logEvent:@"FREE_CAMERA"
+                             message:enabled ? @"enabled" : @"disabled"];
     
     // Cập nhật màu
     sender.onTintColor = enabled ? 
@@ -232,7 +234,8 @@
     BOOL enabled = sender.on;
     // Khi switch ON = tắt fog (m_baseFogEnable = false)
     [_memoryManager writeBool:!enabled atOffset:_memoryManager.offsetFogEnable];
-    [[Logger sharedLogger] logEvent:[NSString stringWithFormat:@"FOG_%@", enabled ? @"OFF" : @"ON"]];
+    [[Logger sharedLogger] logEvent:@"FOG"
+                             message:enabled ? @"disabled" : @"enabled"];
     
     sender.onTintColor = enabled ? 
         [UIColor colorWithRed:0.2 green:0.8 blue:0.4 alpha:1.0] :
@@ -260,7 +263,7 @@
     [self updateStatus];
     
     NSLog(@"[CameraPanel] 🔄 Camera reset to default");
-    [[Logger sharedLogger] logEvent:@"RESET"];
+    [[Logger sharedLogger] logEvent:@"RESET" message:@"camera defaults restored"];
 }
 
 - (void)closeButtonTapped {

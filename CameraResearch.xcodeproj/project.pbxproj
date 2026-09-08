@@ -13,6 +13,7 @@
 		B10000010000000000000004 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B10000110000000000000007 /* main.m */; };
 		B10000010000000000000009 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10000110000000000000010 /* MainViewController.m */; };
 		B10000010000000000000011 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = B10000110000000000000013 /* Logger.m */; };
+		B10000010000000000000012 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10000110000000000000015 /* LoginViewController.m */; };
 		B10000010000000000000005 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000120000000000000001 /* UIKit.framework */; };
 		B10000010000000000000006 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000120000000000000002 /* Foundation.framework */; };
 		B10000010000000000000007 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000120000000000000003 /* CoreGraphics.framework */; };
@@ -36,6 +37,8 @@
 		B10000110000000000000012 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B10000110000000000000013 /* Logger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objc; path = Logger.m; sourceTree = "<group>"; };
 		B10000110000000000000014 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.h; path = Logger.h; sourceTree = "<group>"; };
+		B10000110000000000000015 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		B10000110000000000000016 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		B10000120000000000000001 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B10000120000000000000002 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B10000120000000000000003 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -74,6 +77,8 @@
 				B10000110000000000000012 /* Assets.xcassets */,
 				B10000110000000000000014 /* Logger.h */,
 				B10000110000000000000013 /* Logger.m */,
+				B10000110000000000000016 /* LoginViewController.h */,
+				B10000110000000000000015 /* LoginViewController.m */,
 				B10000300000000000000005 /* Classes */,
 				B10000110000000000000007 /* main.m */,
 				B10000110000000000000008 /* Info.plist */,
@@ -185,6 +190,7 @@
 				B10000010000000000000004 /* main.m in Sources */,
 				B10000010000000000000009 /* MainViewController.m in Sources */,
 				B10000010000000000000011 /* Logger.m in Sources */,
+				B10000010000000000000012 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

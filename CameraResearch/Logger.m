@@ -11,7 +11,7 @@
     return logger;
 }
 
-- (void)logEvent:(NSString *)event {
+- (void)logEvent:(NSString *)event message:(NSString *)message {
     if (event.length == 0) {
         return;
     }
@@ -20,8 +20,9 @@
     NSString *logPath = [documentsPath stringByAppendingPathComponent:@"CameraResearch.log"];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.SSS";
-    NSString *line = [NSString stringWithFormat:@"[%@] %@\n", [formatter stringFromDate:[NSDate date]], event];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSString *line = [NSString stringWithFormat:@"[%@] [%@] %@\n",
+                      [formatter stringFromDate:[NSDate date]], event, message ?: @""];
 
     NSFileHandle *handle = [NSFileHandle fileHandleForWritingAtPath:logPath];
     if (handle == nil) {
