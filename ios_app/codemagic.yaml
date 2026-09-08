@@ -11,16 +11,12 @@ workflows:
         XCODE_SCHEME: "CameraResearch"
         BUNDLE_ID: "com.qhun22.cameraresearch"
         APP_NAME: "CameraResearch"
-      groups:
-        - app_store_credentials
+        APPLE_DEVELOPER_TEAM: ""
     cache:
       cache_paths:
         - ~/.gradle/caches
         - ~/.m2/repository
     scripts:
-      - name: Select provisioning profiles
-        script: |
-          xcode-project use-profiles
       - name: Build and Archive
         script: |
           echo "Building Camera Research for qhun22..."
@@ -34,20 +30,22 @@ workflows:
             -sdk iphoneos \
             -destination 'generic/platform=iOS' \
             -archivePath "build/$APP_NAME.xcarchive" \
-            -allowProvisioningUpdates \
+            DEVELOPMENT_TEAM="$APPLE_DEVELOPER_TEAM" \
+            CODE_SIGN_STYLE="Automatic" \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            PROVISIONING_PROFILE_SPECIFIER="" \
             archive
       - name: Export IPA
         script: |
-          xcodebuild \
-            -exportArchive \
-            -archivePath "build/$APP_NAME.xcarchive" \
-            -exportPath build \
-            -exportOptionsPlist ios_app/CameraResearch/ExportOptions.plist \
-            -allowProvisioningUpdates
-          echo "Build success!"
-          ls -la build/
-      - name: Create TIPA for TrollStore
-        script: |
+          APP_PATH="build/$APP_NAME.xcarchive/Products/Applications/$APP_NAME.app"
+          test -d "$APP_PATH"
+          rm -rf build/Payload
+          mkdir -p build/Payload
+          cp -R "$APP_PATH" build/Payload/
+          (cd build && zip -qry "$APP_NAME.ipa" Payload)
+          rm -rf build/Payload
           cp "build/$APP_NAME.ipa" "build/$APP_NAME.tipa"
       - name: Verify Artifacts
         script: |
