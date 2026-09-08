@@ -5,6 +5,7 @@
 @interface FloatingIconWindow ()
 @property (nonatomic, strong) CameraPanel *cameraPanel;
 @property (nonatomic, strong) UIButton *iconButton;
+@property (nonatomic, strong) CAGradientLayer *gradientLayer;
 @property (nonatomic, assign) CGPoint panStartCenter;
 @end
 
@@ -17,7 +18,7 @@
     self = [super initWithFrame:iconFrame];
     if (self) {
         self.cameraPanel = cameraPanel;
-        self.windowLevel = UIWindowLevelAlert + 1.0;
+        self.windowLevel = UIWindowLevelStatusBar + 1.0;
         self.backgroundColor = [UIColor clearColor];
         self.opaque = NO;
         self.userInteractionEnabled = YES;
@@ -45,7 +46,7 @@
     self.iconButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.iconButton.frame = self.rootViewController.view.bounds;
     self.iconButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.iconButton.backgroundColor = [UIColor colorWithRed:0.13 green:0.59 blue:0.95 alpha:1.0];
+    self.iconButton.backgroundColor = [UIColor clearColor];
     self.iconButton.layer.cornerRadius = 27.5;
     self.iconButton.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.35].CGColor;
     self.iconButton.layer.borderWidth = 1.0;
@@ -59,6 +60,17 @@
     self.iconButton.accessibilityIdentifier = @"FloatingMenuIcon";
     [self.iconButton addTarget:self action:@selector(iconTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.rootViewController.view addSubview:self.iconButton];
+
+    self.gradientLayer = [CAGradientLayer layer];
+    self.gradientLayer.frame = self.iconButton.bounds;
+    self.gradientLayer.cornerRadius = 27.5;
+    self.gradientLayer.colors = @[
+        (id)[UIColor colorWithRed:0.13 green:0.59 blue:0.95 alpha:1.0].CGColor,
+        (id)[UIColor colorWithRed:0.10 green:0.45 blue:0.91 alpha:1.0].CGColor
+    ];
+    self.gradientLayer.startPoint = CGPointMake(0.0, 0.0);
+    self.gradientLayer.endPoint = CGPointMake(1.0, 1.0);
+    [self.iconButton.layer insertSublayer:self.gradientLayer atIndex:0];
 }
 
 - (void)setupGestures {
@@ -91,6 +103,16 @@
     newCenter.x = MAX(halfWidth, MIN(CGRectGetWidth(bounds) - halfWidth, newCenter.x));
     newCenter.y = MAX(halfHeight, MIN(CGRectGetHeight(bounds) - halfHeight, newCenter.y));
     self.center = newCenter;
+
+    if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled) {
+        CGFloat edgePadding = 8.0;
+        CGFloat leftEdge = halfWidth + edgePadding;
+        CGFloat rightEdge = CGRectGetWidth(bounds) - halfWidth - edgePadding;
+        CGFloat snappedX = self.center.x < CGRectGetMidX(bounds) ? leftEdge : rightEdge;
+        [UIView animateWithDuration:0.2 animations:^{
+            self.center = CGPointMake(snappedX, self.center.y);
+        }];
+    }
 }
 
 - (void)menuDidClose:(NSNotification *)notification {

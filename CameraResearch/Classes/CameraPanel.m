@@ -32,7 +32,7 @@
 }
 
 - (void)setupWindow {
-    self.windowLevel = UIWindowLevelStatusBar + 1;
+    self.windowLevel = UIWindowLevelStatusBar + 2;
     self.backgroundColor = [UIColor clearColor];
     self.hidden = NO;
     self.userInteractionEnabled = YES;
